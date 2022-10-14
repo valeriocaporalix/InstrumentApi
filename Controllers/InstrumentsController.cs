@@ -67,7 +67,6 @@ namespace InstrumentsApi.Controllers
             if (instrument is not null)
             {
                 instrument.Id = countId;
-                instruments.Add(instrument);
                 WriterReader writer = new WriterReader();
                 writer.Insert(JsonSerializer.Serialize(instrument));
                 return Created($"{nameof(GetById)}/getbyid/{instrument.Id}",instrument);
@@ -126,7 +125,6 @@ namespace InstrumentsApi.Controllers
             else
             {
                 instrument.Id = countId;
-                instruments.Add(instrument);
                 writer.Insert(JsonSerializer.Serialize(instrument));
                 return Created($"{nameof(GetById)}/getbyid/{instrument.Id}", instrument);
             }
