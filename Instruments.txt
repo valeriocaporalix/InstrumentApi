@@ -1,0 +1,11 @@
+{"Id":2,"Name":"dasdasdad","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":3,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":4,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":5,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":6,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":7,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":8,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":9,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":10,"Name":"HEY","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":11,"Name":"dasdasdad","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
+{"Id":12,"Name":"dasdasdad","Brand":"Heu","Material":"Test","YearOfConstruction":0,"Price":0}
