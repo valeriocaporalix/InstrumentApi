@@ -2,10 +2,7 @@
 
 namespace InstrumentsApi.Models
 {
-    public interface IWriterReader
+    public interface IWriterReader : IWriter, IReader
     {
-        public void Insert(string input);
-
-        public List<Instruments> Read();
     }
 }

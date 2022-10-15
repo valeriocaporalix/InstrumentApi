@@ -10,20 +10,20 @@ namespace InstrumentsApi.Controllers
     [ApiController]
     public class InstrumentsController : ControllerBase
     {
+        private IReader _reader = new WriterReader();
+        private IWriter _writer = new WriterReader();
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            WriterReader reader = new WriterReader();
-            return Ok(reader.Read());
+            return Ok(_reader.Read());
         }
 
         [HttpGet("getbyname/{name}")]
         public IActionResult GetByName(string name)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
-            IEnumerable<Instruments> instrumentsByName = instruments.Where(instruments => instruments.Name == name);
+            List<Instruments> instruments = _reader.Read();
+            IEnumerable<Instruments> instrumentsByName = instruments.Where(instrument => instrument.Name == name);
             if (instrumentsByName != null)
             {
                 return Ok(instrumentsByName);
@@ -34,8 +34,7 @@ namespace InstrumentsApi.Controllers
         [HttpGet("getbyid/{id}")]
         public IActionResult GetById(int id)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
+            List<Instruments> instruments = _reader.Read();
             IEnumerable<Instruments> instrumentById = instruments.Where(instruments => instruments.Id == id);
             if (instrumentById != null)
             {
@@ -47,8 +46,7 @@ namespace InstrumentsApi.Controllers
         [HttpGet("getbybrand/{brand}")]
         public IActionResult GetByBrand(string brand)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
+            List<Instruments> instruments = _reader.Read();
             IEnumerable<Instruments> instrumentsByBrand = instruments.Where(instruments => instruments.Brand == brand);
             if (instrumentsByBrand != null)
             {
@@ -60,15 +58,13 @@ namespace InstrumentsApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Instruments instrument)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
+            List<Instruments> instruments = _reader.Read();
             int countId = instruments.MaxIdValue();
 
             if (instrument is not null)
             {
                 instrument.Id = countId;
-                WriterReader writer = new WriterReader();
-                writer.Insert(JsonSerializer.Serialize(instrument));
+                _writer.Insert(JsonSerializer.Serialize(instrument));
                 return Created($"{nameof(GetById)}/getbyid/{instrument.Id}",instrument);
             }
             return BadRequest();
@@ -77,15 +73,14 @@ namespace InstrumentsApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
+            List<Instruments> instruments = _reader.Read();
             System.IO.File.WriteAllText("./instruments.txt", string.Empty);
-            WriterReader writer = new WriterReader();
+
             foreach (Instruments item in instruments)
             {
                 if (item.Id != id)
                 {
-                    writer.Insert(JsonSerializer.Serialize(item));
+                    _writer.Insert(JsonSerializer.Serialize(item));
                 }
             }        
             return NoContent();
@@ -94,10 +89,8 @@ namespace InstrumentsApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Instruments instrument)
         {
-            WriterReader reader = new WriterReader();
-            List<Instruments> instruments = reader.Read();
 
-            WriterReader writer = new WriterReader();
+            List<Instruments> instruments = _reader.Read();
 
             int countId = instruments.MaxIdValue();
 
@@ -111,12 +104,12 @@ namespace InstrumentsApi.Controllers
                 {
                     if (item.Id != instrumentToUpdate.Id)
                     {
-                        writer.Insert(JsonSerializer.Serialize(item));
+                        _writer.Insert(JsonSerializer.Serialize(item));
                     }
                     else
                     {
                         instrument.Id = instrumentToUpdate.Id;
-                        writer.Insert(JsonSerializer.Serialize(instrument));
+                        _writer.Insert(JsonSerializer.Serialize(instrument));
                     }
                 }
                 
@@ -125,7 +118,7 @@ namespace InstrumentsApi.Controllers
             else
             {
                 instrument.Id = countId;
-                writer.Insert(JsonSerializer.Serialize(instrument));
+                _writer.Insert(JsonSerializer.Serialize(instrument));
                 return Created($"{nameof(GetById)}/getbyid/{instrument.Id}", instrument);
             }
         }
